@@ -1,0 +1,143 @@
+#!/bin/bash
+
+if [[ "$1" == "--help" ]]; then
+    echo "Використання: $0 [--help | --version] | [-q|--quiet] [group] <input_csv_file>"
+    echo "Конвертація розкаладу із .csv NURE Cist у формат, готовий до імпорту в Google Calendar."
+    echo "  --help         Показати довідку"
+    echo "  --version      Інформація про версію"
+    echo "  -q, --quiet    Не виводити інфо у стандартний потік"
+    echo "  group          Назва групи (опціонально)"
+    echo "  input_csv_file .csv файл для конвертації"
+    exit 0
+fi
+
+if [ "$1" = "--version" ]; then
+    echo 'NURE Cist to Google Calendar  v1.0'
+    exit 0
+fi
+
+output="&1"
+if [ "$1" = "-q" -o "$1" = "--quiet" ]; then
+    output=/dev/null
+    shift
+fi
+
+student_group=""
+if [ -z "$student_group" ]; then
+    group_total=$(echo "$groups" | wc -l)
+    if [ "$group_total" -eq 1 ]; then
+        student_group=$(echo "$groups")
+    else
+        student_group=$(select_option "$groups") || exit 0
+    fi
+fi
+
+
+ls_files=$(ls TimeTable_??_??_20??.csv 2>/dev/null | sort)
+
+select_option(){
+
+    select item in quit $1; do
+        if [ "$item" = "" ]; then
+            continue
+        elif [ "$item" = "quit" ]; then
+            return 1 
+        else
+            echo "$item"
+            return 0 
+        fi
+    done
+}
+
+if [ -z "$input" ]; then
+    input=$(select_option "$ls_files") || exit 0
+fi
+
+if [ ! -f "$input" ]; then
+    echo "Error: file '$input' doesnt exist." >&2
+    exit 1
+fi
+
+if [ ! -r "$input" ]; then
+    echo "Error: permission to read file '$input' denied." >&2
+    exit 2
+fi
+
+file_content=$(cat "$input" | sed 's/\r/\n/g' | iconv -f cp1251 -t utf8)
+
+groups=$(
+    echo "$file_content" \
+    | awk -v FPAT='[^,]*|"[^"]*"' '
+     NR > 1 {
+       gsub(/^"/, "", $1);
+       if (split($1, parts, " - ") != 1) print parts[1]
+     }
+    ' | sort | uniq
+)
+
+if [ -z "$student_group" ]; then
+    group_total=$(echo "$groups" | wc -l)
+    if [ "$group_total" -eq 1 ]; then
+        student_group=$(echo "$groups")
+    else
+        student_group=$(select_option "$groups") || exit 0
+    fi
+fi
+
+if ! echo "$groups" | grep -q "$student_group"; then
+    echo "There is no such group as '$student_group' in '$input'."
+    student_group=$(select_option "$groups") || exit 0
+fi
+
+out_file="Google_$(basename "$input")"
+
+awk_script=$(cat <<'EOF'
+BEGIN {
+    print "Subject,Start Date,Start Time,End Date,End Time,Description"
+}
+
+function convert_time(t) {
+    gsub(/"/, "", t)
+    split(t, parts, ":")
+    h = parts[1] + 0
+    m = parts[2] + 0
+    ampm = "AM"
+    if (h == 0) h = 12
+    else if (h == 12) ampm = "PM"
+    else if (h > 12) { h -= 12; ampm = "PM" }
+    return sprintf("%02d:%02d %s", h, m, ampm)
+}
+
+function convert_date(d) {
+    gsub(/"/, "", d)
+    split(d, parts, ".")
+    dd = parts[1]
+    mm = parts[2]
+    yy = parts[3]
+    return sprintf("%02d/%02d/%04d", mm, dd, yy)
+}
+
+NR > 1 && $1 ~ group_pattern {
+    subj = $1
+    gsub(group_pattern "|^\"|\"$", "", subj)
+
+    dt_st = convert_date($2)
+    t_st = convert_time($3)
+    dt_e = convert_date($4)
+    t_e = convert_time($5)
+    count[$2]++
+
+    print "\"" subj "; №" count[$2] "\"," dt_st "," t_st "," dt_e "," t_e "," $12
+}
+EOF
+)
+
+if [ "$output" = "/dev/null" ]; then
+    echo "$file_content" \
+    | awk -v FPAT='[^,]*|"[^"]*"' -v group_pattern="^\"$student_group - " "$awk_script" \
+    | tee "$out_file" > /dev/null
+else
+    echo "$file_content" \
+    | awk -v FPAT='[^,]*|"[^"]*"' -v group_pattern="^\"$student_group - " "$awk_script" \
+    | tee "$out_file"
+fi
