@@ -1,17 +1,5 @@
 <?php
 
-$storage = "cart_storage.csv";
-
-$products = readProductsFromFile("products.csv");
-
-$profile = [
-    "name" => "",
-    "age" => ""
-];
-
-$cart = readCartFromFile("cart.csv");
-
-
 function readProductsFromFile(string $filename): array {
     $products = [];
     if (!file_exists($filename)) {
@@ -195,7 +183,7 @@ function checkout() {
         echo "$counterStr$nameStr$priceStr$amountStr$sumStr\n";
         $counter++;
     }
-    echo "РАЗОМ ДО CПЛАТИ: " . $total . "\n";
+    echo "РАЗОМ ДО CПЛАТИ: " . $total . "\n\n";
 }
 
 function updateProfile() {
@@ -220,8 +208,18 @@ function updateProfile() {
     }
 
     echo "Ваше ім'я: " . $profile['name'] . "\n";
-    echo "Ваш вік: " . $profile['age'] . "\n";
+    echo "Ваш вік: " . $profile['age'] . "\n\n";
 }
+
+
+$products = readProductsFromFile("products.csv");
+
+$profile = [
+    "name" => "",
+    "age" => ""
+];
+
+$cart = readCartFromFile("cart.csv");
 
 $isFirst = true;
 
