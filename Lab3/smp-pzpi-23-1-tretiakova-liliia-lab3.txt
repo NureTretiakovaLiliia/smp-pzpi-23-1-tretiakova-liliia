@@ -517,10 +517,10 @@ tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/d
       'strong_password');
         5     $pdo->setAttribute(PDO::ATTR_ERRMODE,
                                                            13
-PDO::ERRMODE_EXCEPTION);
-  6 } catch (PDOException $e) {
-  7     die("Помилка підключення: " . $e->getMessage());
-  8 }
-  9
- 10 ?>
+          PDO::ERRMODE_EXCEPTION);
+        6 } catch (PDOException $e) {
+        7     die("Помилка підключення: " . $e->getMessage());
+        8 }
+        9
+       10 ?>
 
