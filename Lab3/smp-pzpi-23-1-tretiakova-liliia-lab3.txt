@@ -1,0 +1,526 @@
+                    МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ
+   ХАРКІВСЬКИЙ НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ РАДІОЕЛЕКТРОНІКИ
+
+
+
+                           Кафедра Програмної інженерії
+
+
+
+
+                                        Звіт
+                              з лабораторної роботи №3
+                    з дисципліни: «Скриптові мови програмування»
+             з теми: «Створення Web-застосунків за допомогою PHP»
+
+
+
+
+Виконала:                                                             Перевірив:
+ст. гр. ПЗПІ-23-1                                  Старший викладач кафедри ПІ
+Третьякова Л. С.                                                   Сокорчук І. П.
+
+
+
+
+                                   Харків – 2025
+                                                                               2
+          3 СТВОРЕННЯ WEB-ЗАСТОСУНКІВ ЗА ДОПОМОГОЮ PHP
+
+     3.1 Історія змін
+
+№ Дата               Версія звіту    Опис змін та виправлень
+1 06.05.2025         0.1             Створено звіт
+
+     3.2 Мета роботи
+
+     Отримати базові знання з розробки сайтів.
+
+     3.3 Опис виконаної роботи
+
+     У ході виконання лабораторної роботи було створено структуру проекту:
+      –    основний файл сторінки товарів (products.php),
+      –    сторінку кошика (cart.php),
+      –    файли структури сайту (header.php, footer.php),
+      –    модуль підключення до бази даних database/db.php,
+      –    CRUD-операції над товарами та кошиком користувача database/crud.php,
+      –    директорія images для збереження фото товарів.
+     Для зберігання даних у цій лабораторній роботі було використано MariaDB.
+Було створено дві таблиці: таблиця товарів із основною інформацією про них і
+таблиця кошику, де відповідно до кожного токену кошика додаються товари з їх
+кількостями.
+     HTML-структура сайту складається з шапки сайту з назвою магазину «Весна»
+та навігаційного меню з посиланнями «Головна», «Товари», «Кошик». Підвал сайту
+також містить навігаційні елементи Home, Products, Cart, About Us. Для стилізації
+було підключено Bootstrap Framework.
+     Відображення списку товарів з бази даних на сторінці index.php відбувається
+через функцію getAllProducts(). Біля кожного товару знаходиться поле для введення
+кількості для кожного товару. Сама інформація про товар складається з його назви,
+ціни та фото. Знизу сторінки знаходиться кнопка «Купити», при натисканні на яку
+відбувається відправка форми методом POST. Вигляд сторінки index.php зображено
+на рисунку Б.1.
+                                                                                3
+     Було імплементовано систему кошика за допомогою генерації унікального
+токену кошика через bin2hex(random_bytes(16)) та збереження токену в cookies
+терміном на 30 днів. Токен було використано замість сесій для ідентифікації кошику
+користувача. Це дозволяє гнучко та надійно зберігати дані про кошик користувача.
+У кошику розраховується загальна сума замвомлвення та проміжна сума відповідно
+до кількості та ціни кожного товару. Біля кожного товару є кнопка «Видалити»
+для видалення цього товару з кошика, підтвердження видалення відбувається через
+JavaScript. Якщо кошик порожній, то відображується інформація «Ваш кошик
+порожній» із посиланням «Перейти до покупок». Вигляд кошику користувача
+зображено на рисунку Б.2.
+    Також було реалізовано валідацію даних:
+    –    перевірку POST-запитів на наявність даних,
+    –    валідацію кількості товарів через регулярний вираз,
+    –    відображення помилок валідації в блоці alert alert-danger
+    –    збереження введених значень при помилках валідації.
+    Вигляд помилки валідації зображено на рисунку Б.3.
+    Основні CRUD-операції із файлу database/crud.php включають у себе наступні
+функції:
+    –    getAllProducts() - отримання всіх товарів з БД,
+    –    getCartItems() - отримання товарів кошика за токеном,
+    –    addToCart() - додавання товару до кошика з ON DUPLICATE KEY
+          UPDATE,
+    –    removeFromCart() - видалення товару з кошика.
+    –    getProductNameById() - отримання назви товару за його ID.
+
+     3.4 Висновки
+
+     У ході виконання лабораторної роботи я отримала базові знання з розробки
+сайтів, використавши PHP для серверної логіки, MariaDB для зберігання товарів та
+кошика, Bootstrap для responsive дизайну.
+                                                                           4
+                              ДОДАТОК А
+             Відеозапис презентації лабораторної роботи
+
+Відеозапис результатів лабораторної роботи: https://youtu.be/9Hkz2_H-o2k
+Хронологічний опис відеозапису:
+00:00 – Вступ
+00:11 – Огляд сторінки index.php
+01:03 – Огляд сторінки cart.php
+01:41 – Тестування форми додавання товарів у кошик
+02:19 – Про збереження даних у БД
+02:56 – Огляд коду index.php та crud.php
+06:52 – Огляд коду cart.php
+                                                               5
+                       ДОДАТОК Б
+                    Графічні матеріали
+
+
+
+
+          Рисунок Б.1 – Вигляд сторінки index.php
+
+
+
+
+           Рисунок Б.2 – Вигляд кошику cart.php
+
+
+
+
+        Рисунок Б.3 – Вигляд валідації неправильного вводу кількості
+                                                                                    6
+                                     ДОДАТОК В
+                                   Програмний код
+
+      В.1 { cart.php }
+
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/cart.php
+
+        1 <?php
+        2 session_start();
+        3
+        4 if (!isset($_COOKIE['cart_token'])) {
+        5     $token = bin2hex(random_bytes(16));
+        6     setcookie('cart_token', $token, time() + 60 * 60 * 24 * 30);
+        7 } else {
+        8     $token = $_COOKIE['cart_token'];
+        9 }
+       10
+       11 require 'database/db.php';
+       12 require 'database/crud.php';
+       13 include 'header.php';
+       14
+       15 $cart = getCartItems($token);
+       16
+       17 if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
+      isset($_POST['remove_product_id'])) {
+       18     $removeProductId = (int)$_POST['remove_product_id'];
+       19     removeFromCart($token, $removeProductId);
+       20     header('Location: ' . $_SERVER['REQUEST_URI']);
+       21     exit;
+       22 }
+       23 ?>
+       24
+       25 <h2>Кошик</h2>
+       26
+       27 <?php if (!empty($cart)): ?>
+       28     <table class="table table-bordered table-hover">
+       29          <thead class="table-light">
+       30              <tr>
+       31                   <th>ID</th>
+       32                   <th>Назва</th>
+       33                   <th>Кількість</th>
+       34                   <th>Ціна</th>
+       35                   <th>Сума</th>
+       36                   <th>Дія</th>
+       37              </tr>
+       38          </thead>
+       39          <tbody>
+       40          <?php
+       41              $total = 0;
+       42              foreach ($cart as $cart_item):
+       43                   $sum = $cart_item['price'] *
+      $cart_item['quantity'];
+       44                   $total += $sum;
+                                                                                    7
+       45          ?>
+       46               <tr>
+       47                    <td><?= (int)$cart_item['product_id']?></td>
+       48                    <td><?= htmlspecialchars($cart_item['title']) ?
+      ></td>
+       49                    <td><?= (int)$cart_item['quantity'] ?></td>
+       50                    <td><?= number_format($cart_item['price'], 2) ?>
+      грн</td>
+       51                    <td><?= number_format($sum, 2) ?> грн</td>
+       52                    <td>
+       53                         <form method="POST" onsubmit="return
+      confirm('Видалити цей товар з кошика?')" class="d-inline">
+       54                             <input type="hidden"
+      name="remove_product_id" value="<?= (int)$cart_item['product_id'] ?
+      >">
+       55                             <button type="submit" class="btn btn-sm
+      btn-danger">Видалити</button>
+       56                         </form>
+       57                    </td>
+       58               </tr>
+       59          <?php endforeach; ?>
+       60          </tbody>
+       61          <tfoot>
+       62               <tr>
+       63                    <td colspan="4" class="text-
+      end"><strong>Всього:</strong></td>
+       64                    <td colspan="2"><strong><?= number_format($total,
+      2) ?> грн</strong></td>
+       65               </tr>
+       66          </tfoot>
+       67      </table>
+       68 <?php else: ?>
+       69      <div class="alert alert-info">Ваш кошик порожній. <a
+      href="index.php" class="alert-link">Перейти до покупок</a></div>
+       70 <?php endif; ?>
+       71
+       72 <?php include 'footer.php'; ?>
+
+
+      В.2 { index.php }
+
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/index.php
+
+        1 <?php
+        2 session_start();
+        3
+        4 if (!isset($_COOKIE['cart_token'])) {
+        5     $token = bin2hex(random_bytes(16));
+        6     setcookie('cart_token', $token, time() + 60 * 60 * 24 * 30);
+        7 } else {
+        8     $token = $_COOKIE['cart_token'];
+        9 }
+       10
+       11 require 'database/db.php';
+       12 require 'database/crud.php';
+                                                                       8
+      13
+      14 $products = getAllProducts();
+      15 $quantities = [];
+      16 $errors = [];
+      17
+      18 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      19     if (!empty($_POST['quantity']) &&
+      is_array($_POST['quantity'])) {
+      20         foreach ($_POST['quantity'] as $productId => $qty) {
+      21              $qty = trim($qty);
+      22              if (!preg_match('/^\d+$/', $qty)) {
+      23                  $product_name = getProductNameById($productId);
+      24                  $errors[] = "Кількість для товару $product_name
+      має бути цілим невід’ємним числом.";
+      25              } else {
+      26                  $quantities[$productId] = (int)$qty;
+      27              }
+      28         }
+      29     } else {
+      30         $errors[] = "Не вказано жодної кількості.";
+      31     }
+      32
+      33     if (empty($errors)) {
+      34         foreach ($quantities as $productId => $qty) {
+      35              if ($qty > 0) {
+      36                  addToCart($token, $productId, $qty);
+      37              }
+      38         }
+      39         header("Location: cart.php");
+      40         exit;
+      41     }
+      42 }
+      43
+      44 include 'header.php';
+      45
+      46 if (!empty($errors)) {
+      47     echo '<div class="alert alert-danger"><ul>';
+      48     foreach ($errors as $error) {
+      49         echo '<li>' . htmlspecialchars($error) . '</li>';
+      50     }
+      51     echo '</ul></div>';
+      52 }
+      53 ?>
+      54
+      55 <h2>Список товарів</h2>
+      56
+      57 <form method="POST" novalidate>
+      58     <div class="list-group">
+      59         <?php foreach ($products as $product):
+      60              $val = isset($quantities[$product['id']]) ?
+      $quantities[$product['id']] : 0;
+      61         ?>
+      62         <div class="list-group-item d-flex align-items-center
+      justify-content-between gap-3 flex-wrap">
+      63              <img src="images/<?=
+      htmlspecialchars($product['imageUrl'] ?? 'placeholder.jpg') ?>"
+      64                   alt="<?= htmlspecialchars($product['title']) ?
+      >"
+                                                                                    9
+       65                   class="img-thumbnail" style="width: 80px;
+      height: 80px; object-fit: cover;">
+       66
+       67              <div class="flex-grow-1">
+       68                  <h5 class="mb-1"><?=
+      htmlspecialchars($product['title']) ?></h5>
+       69                  <p class="mb-1">Ціна: <?=
+      number_format($product['price'], 2) ?> грн</p>
+       70              </div>
+       71
+       72              <div style="min-width: 120px;">
+       73                  <label class="form-label mb-0">
+       74                      Кількість:
+       75                      <input type="number" name="quantity[<?=
+      $product['id'] ?>]"
+       76                             value="<?= htmlspecialchars($val) ?>"
+      min="0" step="1"
+       77                             class="form-control form-control-sm">
+       78                  </label>
+       79              </div>
+       80         </div>
+       81         <?php endforeach; ?>
+       82     </div>
+       83
+       84     <div class="mt-4">
+       85         <button type="submit" class="btn btn-success btn-
+      lg">Купити</button>
+       86     </div>
+       87 </form>
+       88
+       89 <?php include 'footer.php'; ?>
+
+
+      В.3 { header.php }
+
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/header.php
+
+        1 <!DOCTYPE html>
+        2 <html lang="uk">
+        3 <head>
+        4     <meta charset="UTF-8">
+        5     <title>Магазин "Весна"</title>
+        6     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/
+      bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        7     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/
+      dist/minty/bootstrap.min.css" rel="stylesheet">
+        8 </head>
+        9 <body>
+       10     <header class="bg-primary text-white p-3 mb-4">
+       11         <div class="container">
+       12             <div class="d-flex justify-content-between align-
+      items-center">
+       13                  <h1 class="h3">Магазин "Весна"</h1>
+       14                  <nav>
+       15                      <a class="btn btn-outline-light me-2"
+                                                                                      10
+      href="index.php">Головна</a>
+       16                     <a class="btn btn-outline-light me-2"
+      href="products.php">Товари</a>
+       17                     <a class="btn btn-outline-light me-2"
+      href="cart.php">Кошик</a>
+       18                 </nav>
+       19             </div>
+       20         </div>
+       21     </header>
+       22     <main class="container mb-5">
+
+
+      В.4 { footer.php }
+
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/footer.php
+
+        1 </main>
+        2
+        3     <footer class="bg-light text-center py-4 mt-auto border-top">
+        4         <nav class="d-flex justify-content-center gap-3">
+        5             <a href="index.php" class="text-decoration-
+      none">Home</a>
+        6             <a href="products.php" class="text-decoration-
+      none">Products</a>
+        7             <a href="cart.php" class="text-decoration-
+      none">Cart</a>
+        8             <a href="#" class="text-decoration-none">About Us</a>
+        9         </nav>
+       10     </footer>
+       11
+       12     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/
+      dist/js/bootstrap.bundle.min.js"></script>
+       13 </body>
+       14 </html>
+
+
+      В.5 { database/create.sql }
+
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/create.sql
+
+        1 // створення бд для 3-4 лабораторних робіт
+        2 CREATE DATABASE smp_lab;
+        3 USE smp_lab;
+        4
+        5 CREATE TABLE products (
+        6     id INT AUTO_INCREMENT PRIMARY KEY,
+        7     title VARCHAR(255) NOT NULL,
+        8     description TEXT,
+        9     imageUrl VARCHAR(255),
+       10     price DECIMAL(10,2) NOT NULL
+       11 );
+       12
+                                                                                       11
+       13 CREATE TABLE cart_items (
+       14     id INT AUTO_INCREMENT PRIMARY KEY,
+       15     cart_token VARCHAR(64) NOT NULL,
+       16     product_id INT NOT NULL,
+       17     quantity INT NOT NULL DEFAULT 1,
+       18
+       19     UNIQUE (cart_token, product_id),
+       20     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE
+      CASCADE
+       21 );
+
+
+      В.6 { database/insert.sql }
+
+      GitHub    репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/insert.sql
+
+        1 INSERT INTO products (id, title, price) VALUES
+        2 (1, 'Молоко “Селянське” 2,5%', 34.90),
+        3 (2, 'Хліб пшеничний “Домашній”', 21.50),
+        4 (3, 'Яйця курячі відбірні, 10 шт', 42.00),
+        5 (4, 'Ковбаса “Лікарська” варена', 129.90),
+        6 (5, 'Олія соняшникова рафінована, 1 л', 59.00),
+        7 (6, 'Цукор білий кристалічний, 1 кг', 33.70),
+        8 (7, 'Макарони “Золоте зерно” спіральки, 500 г', 28.40),
+        9 (8, 'Картопля молода, 1 кг', 26.90),
+       10 (9, 'Сир твердий “Голландський” 45%', 168.50),
+       11 (10, 'Йогурт “Фруктовий вибух” з полуницею, 300 г', 24.30);
+
+
+      В.7 { database/crud.php }
+
+      GitHub    репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/crud.php
+
+          1 <?php
+          2
+          3 // функція для отримання всіх товарів із бд
+          4 function getAllProducts(): array {
+          5     global $pdo;
+          6     $stmt = $pdo->query("SELECT * FROM products");
+          7     return $stmt->fetchAll();
+          8 }
+          9
+        10 // функція для отримання елементів кошику користувача за токеном
+        кошику
+        11 // токен кошику генерується на початку у cart.php
+        12 function getCartItems(string $cartToken): array {
+        13     global $pdo;
+        14     $stmt = $pdo->prepare("
+        15         SELECT ci.product_id, ci.quantity, p.title, p.price,
+        p.imageUrl
+        16         FROM cart_items ci
+        17         JOIN products p ON ci.product_id = p.id
+                                                                                          12
+          18         WHERE ci.cart_token = :token
+          19     ");
+          20     $stmt->execute(['token' => $cartToken]);
+          21     return $stmt->fetchAll();
+          22 }
+          23
+          24 // функція для додавання товару за його ID певної кількості до
+        кошику та запису в бд
+          25 function addToCart(string $cartToken, int $productId, int
+        $quantity): void {
+          26     global $pdo;
+          27     $stmt = $pdo->prepare("
+          28         INSERT INTO cart_items (cart_token, product_id, quantity)
+          29         VALUES (:token, :product_id, :quantity)
+          30         ON DUPLICATE KEY UPDATE quantity = quantity + :quantity
+          31     ");
+          32     $stmt->execute([
+          33         'token' => $cartToken,
+          34         'product_id' => $productId,
+          35         'quantity' => $quantity
+          36     ]);
+          37 }
+          38
+          39 // функція для видалення товару з кошику за його ID
+          40 // кошик визначається за його токеном
+          41 function removeFromCart(string $cartToken, int $productId): void
+        {
+          42     global $pdo;
+          43     $stmt = $pdo->prepare('DELETE FROM cart_items WHERE
+        cart_token = ? AND product_id = ?');
+          44     $stmt->execute([$cartToken, $productId]);
+          45 }
+          46
+          47 // функція для отримання назви товару за його ID
+          48 function getProductNameById(int $productId): string {
+          49     global $pdo;
+          50     $stmt = $pdo->prepare('SELECT title FROM products WHERE id
+        = :productId');
+          51     $stmt->execute(['productId' => $productId]);
+          52     $result = $stmt->fetch(PDO::FETCH_ASSOC);
+          53     return $result ? $result['title'] : '';
+          54 }
+
+
+      В.8 { database/db.php }
+
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
+tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/db.php
+
+        1 <?php
+        2
+        3 try {
+        4     $pdo = new
+      PDO('mysql:host=localhost;dbname=smp_lab;charset=utf8mb4', 'my_user',
+      'strong_password');
+        5     $pdo->setAttribute(PDO::ATTR_ERRMODE,
+                                                           13
+PDO::ERRMODE_EXCEPTION);
+  6 } catch (PDOException $e) {
+  7     die("Помилка підключення: " . $e->getMessage());
+  8 }
+  9
+ 10 ?>
+
