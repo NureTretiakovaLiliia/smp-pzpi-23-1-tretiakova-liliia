@@ -279,9 +279,7 @@ ID товару та кількість. Якщо кількість дорів�
                                    Програмний код
 
       Б.1 Скрипт із реалізацією програми
-      GitHub     репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-
-1-tretiakova-liliia/blob/main/Lab2/smp-pzpi-23-1-tretiakova-liliia-lab2/smp-pzpi-23-1-
-tretiakova-liliia-lab2-code.php
+      GitHub     репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab2/smp-pzpi-23-1-tretiakova-liliia-lab2/smp-pzpi-23-1-tretiakova-liliia-lab2-code.php
 
      1 <?php
      2
