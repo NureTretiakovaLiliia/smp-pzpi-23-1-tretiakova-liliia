@@ -153,8 +153,7 @@ sort, uniq, tee, cat, sed, iconv та іншими, навчилася їх пр
                                    ДОДАТОК А
                                    Відеозапис
 
-     Відеозапис презентації результатів лабораторної роботи: https://www.youtube.
-com/watch?v=RYU8ygtie0Q.
+     Відеозапис презентації результатів лабораторної роботи: https://www.youtube.com/watch?v=RYU8ygtie0Q.
      Хронологічний опис відеозапису:
      00:00 –- Вступне представлення
      00:20 –- Початок опису коду
@@ -173,9 +172,7 @@ com/watch?v=RYU8ygtie0Q.
 
       В.1 { smp-pzpi-23-1-tretiakova-liliia-lab1-code }
 
-      GitHub      репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-
-1-tretiakova-liliia/blob/main/Lab1/smp-pzpi-23-1-tretiakova-liliia-lab1/smp-pzpi-23-1-
-tretiakova-liliia-lab1-code
+      GitHub      репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab1/smp-pzpi-23-1-tretiakova-liliia-lab1/smp-pzpi-23-1-tretiakova-liliia-lab1-code
 
         1 #!/bin/bash
         2
