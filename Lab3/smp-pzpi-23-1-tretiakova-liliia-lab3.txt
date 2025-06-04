@@ -328,8 +328,7 @@ tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/index.php
 
       В.3 { header.php }
 
-      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/header.php
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/header.php
 
         1 <!DOCTYPE html>
         2 <html lang="uk">
@@ -364,8 +363,7 @@ tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/header.php
 
       В.4 { footer.php }
 
-      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/footer.php
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/footer.php
 
         1 </main>
         2
@@ -389,8 +387,7 @@ tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/footer.php
 
       В.5 { database/create.sql }
 
-      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/create.sql
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/create.sql
 
         1 // створення бд для 3-4 лабораторних робіт
         2 CREATE DATABASE smp_lab;
@@ -419,8 +416,7 @@ tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/c
 
       В.6 { database/insert.sql }
 
-      GitHub    репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/insert.sql
+      GitHub    репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/insert.sql
 
         1 INSERT INTO products (id, title, price) VALUES
         2 (1, 'Молоко “Селянське” 2,5%', 34.90),
@@ -437,8 +433,7 @@ tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/i
 
       В.7 { database/crud.php }
 
-      GitHub    репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/crud.php
+      GitHub    репозиторій:     https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/crud.php
 
           1 <?php
           2
@@ -506,8 +501,7 @@ tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/c
 
       В.8 { database/db.php }
 
-      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-
-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/db.php
+      GitHub    репозиторій:    https://github.com/NureTretiakovaLiliia/smp-pzpi-23-1-tretiakova-liliia/blob/main/Lab3/smp-pzpi-23-1-tretiakova-liliia-lab3/database/db.php
 
         1 <?php
         2
